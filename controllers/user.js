@@ -48,7 +48,42 @@ function saveUser(req, res){
   }
 }
 
+function loginUser(req, res){
+  var params = req.body;
+
+  console.log(params);
+
+  var email = params.email;
+  var password = params.password;
+
+  // Find the user in the database
+  User.findOne({email: email.toLowerCase()}, (err, user) => {
+    if(err){
+      res.status(500).send({message: 'Error in request'});
+    }else{
+      if(!user){
+        res.status(404).send({message: 'User does not exists'});
+      }else{
+        bcrypt.compare(password, user.password, function(err, check){
+          if(check){
+            //Return logged user data
+            if(params.gethash){
+              //Return jwt token
+            }else{
+              res.status(200).send({user});
+            }
+          }else{
+            res.status(404).send({message: 'User could not be logged'});
+          }
+        });
+      }
+    }
+  });
+
+}
+
 module.exports = {
   pruebas,
-  saveUser
+  saveUser,
+  loginUser
 };
