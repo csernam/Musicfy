@@ -103,9 +103,41 @@ function updateUser(req, res){
   });
 }
 
+function uploadImages(req, res){
+  var userId = req.params.id;
+  var filename = 'Not uploaded';
+
+  if(req.files){
+    var file_path = req.files.image.path;
+    var file_split = file_path.split('/');
+    var file_name = file_split[2];
+
+    var ext_split = file_name.split('.');
+    var file_ext = ext_split[1];
+
+    if(file_ext == 'png' || file_ext == 'jpeg' || file_ext == 'jpg'){
+      User.findByIdAndUpdate(userId, {image: file_name}, (err, userUpdated) => {
+        if(!userUpdated){
+          res.status(404).send({message: 'User could not be updated'});
+        }else{
+          res.status(200).send({user: userUpdated});
+        }
+      });
+    }else{
+      res.status(200).send({message: 'Unsupported file extension'});
+    }
+
+    // console.log(ext_split);
+  }else{
+    res.status(200).send({message: 'No image has been uploded'});
+  }
+}
+
+
 module.exports = {
   pruebas,
   saveUser,
   loginUser,
-  updateUser
+  updateUser,
+  uploadImages
 };
