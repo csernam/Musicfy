@@ -6,12 +6,6 @@ var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/user');
 var jwt = require('../services/jwt');
 
-function pruebas(req, res){
-  res.status(200).send({
-    message: 'Probando una acción del controlador de usuarios del API rest'
-  })
-}
-
 function saveUser(req, res){
   var user = new User();
 
@@ -150,7 +144,6 @@ function getImageFile(req, res){
 
 
 module.exports = {
-  pruebas,
   saveUser,
   loginUser,
   updateUser,
