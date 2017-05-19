@@ -86,6 +86,10 @@ function updateUser(req, res){
   var userId = req.params.id;
   var update = req.body;
 
+  if (userId != req.user.sub){
+    return res.status(500).send({message: 'Error: You are not allowed to update this user'});
+  }
+
   User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
     if(err){
       res.status(500).send({message: 'Error: User could not be updated'});
