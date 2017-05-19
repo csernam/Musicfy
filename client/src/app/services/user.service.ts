@@ -37,6 +37,19 @@ export class UserService {
     return this._http.post(this.url + 'register', params, { headers: headers }).map(res => res.json());
   }
 
+  public updateUser(user_to_update) {
+    const json = JSON.stringify(user_to_update);
+    const params = json;
+
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': this.getToken()
+    });
+
+    return this._http.put(this.url + 'update-user/' + user_to_update._id,
+      params, { headers: headers }).map(res => res.json());
+  }
+
   public getIdentity() {
     const identity = JSON.parse(localStorage.getItem('identity'));
 
