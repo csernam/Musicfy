@@ -1,22 +1,49 @@
 <div *ngIf="identity" class="navigation col-lg-1">
-  <h1>
-    {{title}}
+  <h1 class="head-title">
+    <a [routerLink] = "['/']">
+      <span class="glyphicon glyphicon-music" aria-hidden="true"></span>
+      {{title}}
+    </a>
   </h1>
-  <span>
-    {{identity.name}}
-  </span>
-  <span class="btn btn-warning" (click)="logout()">
-      Log Out
-  </span>
-</div>
+  <nav id="navigation">
+    <a href="#">
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        Search
+    </a>
+    <a href="#">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        Artists
+    </a>
+    <a href="#">
+      <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+        Albums
+    </a>
+  </nav>
 
-<div class="clearfix"></div>
+  <nav id="user_logged">
+    <div class="user-image">
+      <img id="image-logged" src="{{url + 'get-image-user/' + identity.image}}" />
+    </div>
+    <span id="identity_name">
+      {{identity.name}}
+    </span>
+
+    <a [routerLink] = "['/profile']">
+      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+        My Profile
+    </a>
+    <a (click)="logout()" class="btn-logout">
+      <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+        Log Out
+    </a>
+  </nav>
+</div>
 
 <div *ngIf="identity" class="central col-lg-11">
-  <p>You are logged!</p>
+  <router-outlet></router-outlet>
 </div>
 
-<div *ngIf="!identity" class="central col-lg-12">
+<div *ngIf="!identity" class="central col-lg-11">
   <div class="col-lg-6">
     <h1>Sign In</h1>
     <div *ngIf="errorMessage">
